@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "xwp/country-card",
+	"version": "1.0.0",
+	"title": "Country Card",
+	"category": "widgets",
+	"icon": "admin-site",
+	"description": "Block rendering a card with country information.",
+	"supports": {
+		"align": true
+	},
+	"attributes": {
+		"countryCode": {
+			"type": "string",
+			"source": "html",
+			"selector": ".xwp-country-card__country-code"
+		},
+		"relatedPosts": {
+			"type": "array",
+			"source": "query",
+			"selector": ".related-post",
+			"query": {
+				"title": {
+					"type": "string",
+					"selector": ".title",
+					"source": "text"
+				},
+				"excerpt": {
+					"type": "string",
+					"selector": ".excerpt",
+					"source": "text"
+				},
+				"link": {
+					"type": "string",
+					"selector": ".link",
+					"source": "attribute",
+					"attribute": "href"
+				},
+				"id": {
+					"type": "string",
+					"selector": ".link",
+					"source": "attribute",
+					"attribute": "data-post-id"
+				}
+			}
+		}
+	},
+	"textdomain": "xwp-country-card",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

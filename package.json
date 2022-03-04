@@ -1,0 +1,40 @@
+{
+	"name": "@xwp/country-card-block",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Block rendering a card with country information.",
+	"author": "XWP",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"engines": {
+		"node": "16",
+		"npm": ">=8"
+	},
+	"scripts": {
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start",
+		"env": "wp-env"
+	},
+	"devDependencies": {
+		"@wordpress/block-editor": "^8.1.1",
+		"@wordpress/blocks": "^11.2.1",
+		"@wordpress/components": "^19.4.0",
+		"@wordpress/data": "^6.2.1",
+		"@wordpress/element": "^4.1.1",
+		"@wordpress/env": "^4.2.1",
+		"@wordpress/eslint-plugin": "^10.0.1",
+		"@wordpress/i18n": "^4.3.1",
+		"@wordpress/icons": "^6.3.0",
+		"@wordpress/prettier-config": "^1.1.2",
+		"@wordpress/scripts": "^21.0.0",
+		"@wordpress/stylelint-config": "^20.0.1",
+		"eslint": "^8.8.0",
+		"eslint-plugin-react-hooks": "^4.3.0",
+		"prettier": "npm:wp-prettier@2.2.1-beta-1"
+	}
+}
