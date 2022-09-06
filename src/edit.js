@@ -16,7 +16,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import countries from '../assets/countries.json';
-import { getEmojiFlag } from './utils';
+import { getCountryDropdownOptions } from './utils';
 import Preview from './preview';
 
 /**
@@ -27,11 +27,6 @@ import './editor.scss';
 export default function Edit( { attributes, setAttributes } ) {
 	const { countryCode, relatedPosts } = attributes;
 	const blockProps = useBlockProps();
-	const options = Object.keys( countries ).map( ( code ) => ( {
-		value: code,
-		label: getEmojiFlag( code ) + '  ' + countries[ code ] + ' — ' + code,
-	} ) );
-
 	const [ isPreview, setPreview ] = useState( false );
 
 	useEffect( () => setPreview( countryCode ), [ countryCode ] );
@@ -101,7 +96,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					<ComboboxControl
 						label={ __( 'Country', 'xwp-country-card' ) }
 						hideLabelFromVision
-						options={ options }
+						options={ getCountryDropdownOptions() }
 						value={ countryCode }
 						onChange={ handleChangeCountryCode }
 						allowReset={ true }
