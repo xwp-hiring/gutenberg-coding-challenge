@@ -26,7 +26,7 @@ export default function Preview( { countryCode, relatedPosts } ) {
 				<div className="xwp-country-card-flag">{ emojiFlag }</div>
 			</div>
 			<h3 className="xwp-country-card__heading">
-				{ __( 'Hello from' ) }{ ' ' }
+				{ __( 'Hello from', 'xwp-country-card' ) }{ ' ' }
 				<strong>{ countries[ countryCode ] }</strong> (
 				<span className="xwp-country-card__country-code">
 					{ countryCode }
@@ -45,7 +45,10 @@ export default function Preview( { countryCode, relatedPosts } ) {
 								),
 								relatedPosts.length
 						  )
-						: __( 'There are no related posts.' ) }
+						: __(
+								'There are no related posts.',
+								'xwp-country-card'
+						  ) }
 				</h3>
 				{ hasRelatedPosts && (
 					<ul className="xwp-country-card__related-posts-list">
