@@ -36,5 +36,8 @@
 		"eslint": "^8.8.0",
 		"eslint-plugin-react-hooks": "^4.3.0",
 		"prettier": "npm:wp-prettier@2.2.1-beta-1"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^6.13.0"
 	}
 }

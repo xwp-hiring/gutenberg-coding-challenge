@@ -11,6 +11,7 @@ import {
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -29,8 +30,6 @@ export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 	const [ isPreview, setPreview ] = useState( false );
 
-	useEffect( () => setPreview( countryCode ), [ countryCode ] );
-
 	const handleChangeCountry = () => {
 		if ( isPreview ) setPreview( false );
 		else if ( countryCode ) setPreview( true );
@@ -45,26 +44,29 @@ export default function Edit( { attributes, setAttributes } ) {
 		}
 	};
 
+	useEffect( () => setPreview( countryCode ), [ countryCode ] );
+
 	useEffect( () => {
 		async function getRelatedPosts() {
 			const postId = window.location.href.match( /post=([\d]+)/ )[ 1 ];
-			const response = await window.fetch(
-				`/wp-json/wp/v2/posts?search=${ countries[ countryCode ] }&exclude=${ postId }`
-			);
+			try {
+				const response = await apiFetch( {
+					path: `/wp/v2/posts?search=${ countries[ countryCode ] }&exclude=${ postId }`,
+				} );
 
-			if ( ! response.ok )
-				throw new Error( `HTTP error! Status: ${ response.status }` );
-
-			const posts = await response.json();
-
-			setAttributes( {
-				relatedPosts:
-					posts?.map( ( relatedPost ) => ( {
-						...relatedPost,
-						title: relatedPost.title?.rendered || relatedPost.link,
-						excerpt: relatedPost.excerpt?.rendered || '',
-					} ) ) || [],
-			} );
+				setAttributes( {
+					relatedPosts:
+						response?.map( ( relatedPost ) => ( {
+							...relatedPost,
+							title:
+								relatedPost.title?.rendered || relatedPost.link,
+							excerpt: relatedPost.excerpt?.rendered || '',
+						} ) ) || [],
+				} );
+			} catch ( err ) {
+				// TODO display error message
+				console.log( err.message );
+			}
 		}
 
 		getRelatedPosts();
