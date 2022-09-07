@@ -14,14 +14,13 @@ export default function Preview( { countryCode, relatedPosts } ) {
 	if ( ! countryCode ) return null;
 
 	return (
-		<div className="xwp-country-card">
+		<article className="xwp-country-card">
 			<CountryFlag countryCode={ countryCode } />
-			<h3 className="xwp-country-card__heading">
+			<h2 className="xwp-country-card__heading">
 				{ __( 'Hello from', 'xwp-country-card' ) }{ ' ' }
 				<CountryGreeting countryCode={ countryCode } />
-			</h3>
-
+			</h2>
 			<RelatedPosts relatedPosts={ relatedPosts } />
-		</div>
+		</article>
 	);
 }
