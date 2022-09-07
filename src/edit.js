@@ -10,10 +10,14 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
+/**
+ * Internal dependencies
+ */
 /**
  * Internal dependencies
  */
@@ -31,6 +35,8 @@ export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 	const [ isPreview, setPreview ] = useState( false );
 	const postId = useSelect( 'core/editor' ).getCurrentPostId();
+
+	const { createErrorNotice } = useDispatch( noticesStore );
 
 	const handleChangeCountry = () => {
 		if ( isPreview ) setPreview( false );
@@ -64,11 +70,26 @@ export default function Edit( { attributes, setAttributes } ) {
 							excerpt: relatedPost.excerpt?.rendered || '',
 						} ) ) || [],
 				} );
-			} catch ( err ) {}
+			} catch ( err ) {
+				createErrorNotice(
+					sprintf(
+						// Translators: %s: Error message
+						__(
+							'Unable to retrieve related posts: %s',
+							'xwp-country-card'
+						),
+						err.message
+					),
+					{
+						type: 'snackbar',
+						explicitDismiss: true,
+					}
+				);
+			}
 		}
 
 		getRelatedPosts();
-	}, [ countryCode, setAttributes, postId ] );
+	}, [ countryCode, setAttributes, postId, createErrorNotice ] );
 
 	return (
 		<>
