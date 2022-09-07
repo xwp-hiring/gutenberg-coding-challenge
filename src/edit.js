@@ -36,8 +36,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { createErrorNotice } = useDispatch( noticesStore );
 
 	const handleChangeCountry = () => {
-		if ( isPreview ) setPreview( false );
-		else if ( countryCode ) setPreview( true );
+		if ( isPreview ) {
+			setPreview( false );
+		} else if ( countryCode ) {
+			setPreview( true );
+		}
 	};
 
 	const handleChangeCountryCode = ( newCountryCode ) => {
@@ -101,25 +104,27 @@ export default function Edit( { attributes, setAttributes } ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
+				{ ! isPreview && (
+					<Placeholder
+						icon={ globe }
+						label={ __( 'XWP Country Card', 'xwp-country-card' ) }
+						isColumnLayout={ true }
+						instructions={ __(
+							'Type in a name of a country you want to display on you site.',
+							'xwp-country-card'
+						) }
+					>
+						<ComboboxControl
+							label={ __( 'Country', 'xwp-country-card' ) }
+							hideLabelFromVision
+							options={ getCountryDropdownOptions() }
+							value={ countryCode }
+							onChange={ handleChangeCountryCode }
+							allowReset={ true }
+						/>
+					</Placeholder>
+				) }
 
-				<Placeholder
-					icon={ globe }
-					label={ __( 'XWP Country Card', 'xwp-country-card' ) }
-					isColumnLayout={ true }
-					instructions={ __(
-						'Type in a name of a country you want to display on you site.',
-						'xwp-country-card'
-					) }
-				>
-					<ComboboxControl
-						label={ __( 'Country', 'xwp-country-card' ) }
-						hideLabelFromVision
-						options={ getCountryDropdownOptions() }
-						value={ countryCode }
-						onChange={ handleChangeCountryCode }
-						allowReset={ true }
-					/>
-				</Placeholder>
 				{ isPreview && (
 					<Preview
 						countryCode={ countryCode }
