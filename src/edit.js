@@ -18,9 +18,6 @@ import { store as noticesStore } from '@wordpress/notices';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import countries from '../assets/countries.json';
 import { getCountryDropdownOptions } from './utils';
 import Preview from './preview';
