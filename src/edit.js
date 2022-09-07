@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -29,6 +30,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { countryCode, relatedPosts } = attributes;
 	const blockProps = useBlockProps();
 	const [ isPreview, setPreview ] = useState( false );
+	const postId = useSelect( 'core/editor' ).getCurrentPostId();
 
 	const handleChangeCountry = () => {
 		if ( isPreview ) setPreview( false );
@@ -48,7 +50,6 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	useEffect( () => {
 		async function getRelatedPosts() {
-			const postId = window.location.href.match( /post=([\d]+)/ )[ 1 ];
 			try {
 				const response = await apiFetch( {
 					path: `/wp/v2/posts?search=${ countries[ countryCode ] }&exclude=${ postId }`,
@@ -63,14 +64,11 @@ export default function Edit( { attributes, setAttributes } ) {
 							excerpt: relatedPost.excerpt?.rendered || '',
 						} ) ) || [],
 				} );
-			} catch ( err ) {
-				// TODO display error message
-				console.log( err.message );
-			}
+			} catch ( err ) {}
 		}
 
 		getRelatedPosts();
-	}, [ countryCode, setAttributes ] );
+	}, [ countryCode, setAttributes, postId ] );
 
 	return (
 		<>
